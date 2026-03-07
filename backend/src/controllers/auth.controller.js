@@ -2,11 +2,11 @@ const userModel = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-async function registerUser(req, res){
-    const {name, email, password, role, isBanned} = req.body;
+async function registerUser(req, res) {
+    const { name, email, password, role, isBanned } = req.body;
 
-    const isUserExist = await userModel.findOne({email});
-    if(isUserExist){
+    const isUserExist = await userModel.findOne({ email });
+    if (isUserExist) {
         return res.status(400).json({
             success: false,
             message: "User already exists"
@@ -29,10 +29,10 @@ async function registerUser(req, res){
             role: newUser.role
         },
         process.env.JWT_SECRET,
-        {expiresIn: '1d'}
+        { expiresIn: '1d' }
     )
 
-    res.cookie('token', token, {httpOnly: true});
+    res.cookie('token', token, { httpOnly: true });
 
     res.status(201).json({
         success: true,
@@ -46,6 +46,51 @@ async function registerUser(req, res){
     })
 }
 
+async function loginUser(req, res) {
+    const { email, password } = req.body;
+
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+        return res.status(400).json({
+            success: false,
+            message: "Invalid email or password"
+        })
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+        return res.status(400).json({
+            success: false,
+            message: "Invalid email or password"
+        })
+    }
+
+    const token = jwt.sign(
+        {
+            userId: user._id,
+            email: user.email,
+            role: user.role
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: '1d' }
+    )
+    res.cookie('token', token, { httpOnly: true });
+
+    res.status(200).json({
+        success: true,
+        message: "User logged in successfully",
+        user: {
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            isBanned: user.isBanned
+        }
+    })
+}
+
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 }
