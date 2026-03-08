@@ -1,5 +1,5 @@
 const movieModel = require("../models/movie.model");
-const { getTrendingMovies, getPopularMovies, getTopRatedMovies, getUpcomingMovies, getMovieDetails, getMovieVideos, getMovieCast, searchMovies } = require("../services/tmdb.service");
+const { getTrendingMovies, getPopularMovies, getTopRatedMovies, getUpcomingMovies, getMovieDetails, getMovieVideos, getMovieCast, searchMovies, getFullMovieData } = require("../services/tmdb.service");
 const formatCast = require("../utils/formatCast");
 const formatMovie = require("../utils/formatMovie");
 const formatMovieDetails = require("../utils/formatMovieDetails");
@@ -266,6 +266,32 @@ exports.getSearchMovie = async (req, res) => {
     res.status(500).json({
       success: false,
       message: error.message
+    })
+
+  }
+
+}
+
+exports.getFullMovie = async (req, res) => {
+
+  try {
+
+    const { id } = req.params
+
+    const data = await getFullMovieData(id)
+
+    res.json({
+      success: true,
+      movie: formatMovieDetails(data.movie),
+      trailer: data.videos.find(v => v.type === "Trailer"),
+      cast: data.cast.slice(0,10).map(formatCast)
+    })
+
+  } catch (error) {
+
+    res.status(500).json({
+      success:false,
+      message:error.message
     })
 
   }

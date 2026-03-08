@@ -13,6 +13,8 @@ movieRouter.get("/upcoming", authMiddleware, movieController.getUpcomingMovies);
 
 movieRouter.get("/search", authMiddleware, movieController.getSearchMovie);
 
+movieRouter.get("/:id/full", authMiddleware, movieController.getFullMovie);
+
 movieRouter.get("/:id", authMiddleware, movieController.getMovieDetails);
 movieRouter.get("/:id/videos", authMiddleware, movieController.getMovieVideos);
 movieRouter.get("/:id/cast", authMiddleware, movieController.getMovieCast);

@@ -83,3 +83,29 @@ exports.searchMovies = async (query) => {
     })
     return res.data.results
 }
+
+exports.getFullMovieData = async (id) => {
+
+  const [details, videos, credits] = await Promise.all([
+
+    axios.get(`${BASE_URL}/movie/${id}`, {
+      params: { api_key: API_KEY }
+    }),
+
+    axios.get(`${BASE_URL}/movie/${id}/videos`, {
+      params: { api_key: API_KEY }
+    }),
+
+    axios.get(`${BASE_URL}/movie/${id}/credits`, {
+      params: { api_key: API_KEY }
+    })
+
+  ])
+
+  return {
+    movie: details.data,
+    videos: videos.data.results,
+    cast: credits.data.cast
+  }
+
+}
