@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { Compass, Heart, History, Home, LogIn, LogOut, Shield, X } from "lucide-react"
+import { Clapperboard, Compass, Heart, History, Home, LogIn, LogOut, Shield, Tv, X } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { logoutUser } from "../../../features/auth/redux/authSlice"
@@ -40,48 +40,49 @@ const Sidebar = ({ isOpen, onClose }) => {
         className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}
       >
 
-      <div className={styles.head}>
-        <NavLink to="/" onClick={onClose} className={styles.logo}>
-          <span>Movix</span>
-        </NavLink>
-
-        <button type="button" className={styles.closeBtn} onClick={onClose} aria-label="Close menu">
-          <X size={18} />
-        </button>
-      </div>
-
-      <nav className={styles.menu}>
-
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.name}
-            to={item.path}
-            onClick={onClose}
-            className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ""}`}
-          >
-            {item.icon}
-            <span>{item.name}</span>
+        <div className={styles.head}>
+          <NavLink to="/" onClick={onClose} className={styles.logo}>
+           <Clapperboard size={32} color="#ff0000" />
+            <span>Movix</span>
           </NavLink>
-        ))}
 
-      </nav>
+          <button type="button" className={styles.closeBtn} onClick={onClose} aria-label="Close menu">
+            <X size={18} />
+          </button>
+        </div>
 
-      <div className={styles.authActions}>
-        {user ? (
-          <>
-            <p className={styles.userName}>Hi, {user.name}</p>
-            <button type="button" className={styles.actionBtn} onClick={handleLogout}>
-              <LogOut size={16} />
-              Logout
-            </button>
-          </>
-        ) : (
-          <NavLink to="/login" onClick={onClose} className={styles.actionBtn}>
-            <LogIn size={16} />
-            Login
-          </NavLink>
-        )}
-      </div>
+        <nav className={styles.menu}>
+
+          {menuItems.map((item) => (
+            <NavLink
+              key={item.name}
+              to={item.path}
+              onClick={onClose}
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ""}`}
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </NavLink>
+          ))}
+
+        </nav>
+
+        <div className={styles.authActions}>
+          {user ? (
+            <>
+              <p className={styles.userName}>Hi, {user.name}</p>
+              <button type="button" className={styles.actionBtn} onClick={handleLogout}>
+                <LogOut size={16} />
+                Logout
+              </button>
+            </>
+          ) : (
+            <NavLink to="/login" onClick={onClose} className={styles.actionBtn}>
+              <LogIn size={16} />
+              Login
+            </NavLink>
+          )}
+        </div>
 
       </aside>
     </>

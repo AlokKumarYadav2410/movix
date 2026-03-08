@@ -9,7 +9,7 @@ import styles from "./Navbar.module.scss"
 const Navbar = ({ onOpenMenu }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
+  const user = useSelector((state) => state.auth.user)
   const searchQuery = useSelector((state) => state.movies.searchQuery)
 
   const onSearchChange = (event) => {
@@ -47,7 +47,7 @@ const Navbar = ({ onOpenMenu }) => {
         >
           <Menu size={18} />
         </button>
-
+        <h3>Hi, {user ? user.name : "Guest"}</h3>
         <ThemeToggle />
 
       </div>
