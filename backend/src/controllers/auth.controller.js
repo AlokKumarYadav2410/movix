@@ -6,7 +6,7 @@ const blacklistModel = require("../models/blacklist.model");
 exports.registerUser = async (req, res) => {
     try {
 
-        const { name, email, password, role } = req.body;
+        const { name, email, password } = req.body;
 
         if (!name || !email || !password) {
             return res.status(400).json({
@@ -30,7 +30,7 @@ exports.registerUser = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            role: role || "user"
+            role: "user"
         });
 
         const token = jwt.sign(

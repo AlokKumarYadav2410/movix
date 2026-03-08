@@ -1,4 +1,5 @@
 const historyModel = require("../models/history.model");
+const mongoose = require("mongoose");
 
 exports.addHistory = async (req, res) => {
     try {
@@ -6,10 +7,15 @@ exports.addHistory = async (req, res) => {
         const { movieId } = req.body;
         const userId = req.user.userId;
 
-        const history = await historyModel.create({
-            userId,
-            movieId
-        });
+        const history = await historyModel.findOneAndUpdate(
+            { userId, movieId: String(movieId) },
+            { $set: { watchedAt: new Date() } },
+            {
+                upsert: true,
+                returnDocument: "after",
+                setDefaultsOnInsert: true
+            }
+        );
 
         res.status(201).json({
             success: true,
@@ -30,10 +36,39 @@ exports.getHistory = async (req, res) => {
 
         const userId = req.user.userId;
 
-        const history = await historyModel
-            .find({ userId })
-            .sort({ createdAt: -1 })
-            .limit(20);
+        const history = await historyModel.aggregate([
+            {
+                $match: {
+                    userId: new mongoose.Types.ObjectId(userId)
+                }
+            },
+            {
+                $sort: {
+                    watchedAt: -1,
+                    createdAt: -1
+                }
+            },
+            {
+                $group: {
+                    _id: "$movieId",
+                    latest: { $first: "$$ROOT" }
+                }
+            },
+            {
+                $replaceRoot: {
+                    newRoot: "$latest"
+                }
+            },
+            {
+                $sort: {
+                    watchedAt: -1,
+                    createdAt: -1
+                }
+            },
+            {
+                $limit: 20
+            }
+        ]);
 
         res.status(200).json({
             success: true,
