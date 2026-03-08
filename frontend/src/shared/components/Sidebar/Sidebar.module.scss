@@ -1,0 +1,127 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 240px;
+  height: 100vh;
+
+  background: linear-gradient(165deg, color-mix(in srgb, var(--bg) 88%, #ffffff 12%), var(--bg));
+  border-right: 1px solid var(--border);
+
+  padding: 24px 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  z-index: 50;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.closeBtn {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.menu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+.link:hover {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--text);
+}
+
+.active {
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
+  color: var(--text);
+}
+
+.authActions {
+  display: grid;
+  gap: 10px;
+}
+
+.userName {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.actionBtn {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.overlay {
+  display: none;
+}
+
+@media (max-width: 940px) {
+  .sidebar {
+    transform: translateX(-108%);
+    transition: transform 0.28s ease;
+    width: min(290px, 85vw);
+    box-shadow: var(--elevation-1);
+  }
+
+  .open {
+    transform: translateX(0);
+  }
+
+  .closeBtn {
+    display: inline-flex;
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.42);
+    border: none;
+    padding: 0;
+    z-index: 45;
+  }
+
+  .overlayVisible {
+    display: block;
+  }
+}

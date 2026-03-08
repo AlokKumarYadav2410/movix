@@ -1,0 +1,25 @@
+:root {
+  --accent: #ff5a36;
+  --warning: #ffd166;
+  --danger: #ef476f;
+
+  --bg: #0c1018;
+  --card: #121a28;
+  --border: #243245;
+
+  --text: #f4f7fb;
+  --text-secondary: #9fb0c8;
+}
+
+[data-theme="light"] {
+  --accent: #e4572e;
+  --warning: #f4a259;
+  --danger: #cf2b58;
+
+  --bg: #f3f7fb;
+  --card: #ffffff;
+  --border: #d8e0eb;
+
+  --text: #0f172a;
+  --text-secondary: #5b6b7f;
+}
