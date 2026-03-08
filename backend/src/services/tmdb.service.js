@@ -43,3 +43,13 @@ exports.getUpcomingMovies = async () => {
     })
     return res.data.results
 }
+
+exports.getMovieDetails = async (movieId) => {
+
+    const res = await axios.get(`${BASE_URL}/movie/${movieId}`, {
+        params: {
+            api_key: API_KEY
+        }
+    })
+    return res.data
+}

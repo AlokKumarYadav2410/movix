@@ -10,6 +10,7 @@ movieRouter.get("/trending", authMiddleware, movieController.getTrendingMovies);
 movieRouter.get("/popular", authMiddleware, movieController.getPopularMovies);
 movieRouter.get("/top-rated", authMiddleware, movieController.getTopRatedMovies);
 movieRouter.get("/upcoming", authMiddleware, movieController.getUpcomingMovies);
+movieRouter.get("/:id", authMiddleware, movieController.getMovieDetails);
 movieRouter.post("/", authMiddleware, adminMiddleware, movieController.addMovie);
 movieRouter.put("/:id", authMiddleware, adminMiddleware, movieController.updateMovie);
 movieRouter.delete("/:id", authMiddleware, adminMiddleware, movieController.deleteMovie);

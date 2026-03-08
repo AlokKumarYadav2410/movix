@@ -1,6 +1,7 @@
 const movieModel = require("../models/movie.model");
-const { getTrendingMovies, getPopularMovies, getTopRatedMovies, getUpcomingMovies } = require("../services/tmdb.service");
+const { getTrendingMovies, getPopularMovies, getTopRatedMovies, getUpcomingMovies, getMovieDetails } = require("../services/tmdb.service");
 const formatMovie = require("../utils/formatMovie");
+const formatMovieDetails = require("../utils/formatMovieDetails");
 
 exports.addMovie = async (req, res) => {
   try {
@@ -126,7 +127,7 @@ exports.getPopularMovies = async (req, res) => {
 }
 
 exports.getTopRatedMovies = async (req, res) => {
-  try{
+  try {
     const movies = await getTopRatedMovies()
     const formattedMovies = movies.map(formatMovie)
     res.json({
@@ -143,7 +144,7 @@ exports.getTopRatedMovies = async (req, res) => {
 }
 
 exports.getUpcomingMovies = async (req, res) => {
-  try{
+  try {
     const movies = await getUpcomingMovies()
     const formattedMovies = movies.map(formatMovie)
     res.json({
@@ -157,4 +158,30 @@ exports.getUpcomingMovies = async (req, res) => {
       message: error.message
     })
   }
+}
+
+exports.getMovieDetails = async (req, res) => {
+
+  try {
+
+    const { id } = req.params
+
+    const movie = await getMovieDetails(id)
+
+    const formattedMovie = formatMovieDetails(movie)
+
+    res.json({
+      success: true,
+      movie: formattedMovie
+    })
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: error.message
+    })
+
+  }
+
 }
