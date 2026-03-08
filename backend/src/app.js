@@ -1,7 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require("cors")
-const apiLimiter = require("./middlewares/rateLimiter.middleware");
+const apiLimiter = require("../src/middleware/rateLimiter.middleware");
 
 const app = express();
 
