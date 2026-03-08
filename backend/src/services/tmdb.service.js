@@ -3,42 +3,70 @@ const axios = require("axios")
 const BASE_URL = process.env.TMDB_BASE_URL
 const API_KEY = process.env.TMDB_API_KEY
 
-exports.getTrendingMovies = async () => {
+exports.getTrendingMovies = async (page = 1) => {
 
     const res = await axios.get(`${BASE_URL}/trending/movie/week`, {
         params: {
-            api_key: API_KEY
+            api_key: API_KEY,
+            page
         }
     })
 
     return res.data.results
 }
 
-exports.getPopularMovies = async () => {
+exports.getPopularMovies = async (page = 1) => {
 
     const res = await axios.get(`${BASE_URL}/movie/popular`, {
         params: {
-            api_key: API_KEY
+            api_key: API_KEY,
+            page
         }
     })
 
     return res.data.results
 }
 
-exports.getTopRatedMovies = async () => {
+exports.getPopularTvShows = async (page = 1) => {
+
+    const res = await axios.get(`${BASE_URL}/tv/popular`, {
+        params: {
+            api_key: API_KEY,
+            page
+        }
+    })
+
+    return res.data.results
+}
+
+exports.getPopularPeople = async (page = 1) => {
+
+    const res = await axios.get(`${BASE_URL}/person/popular`, {
+        params: {
+            api_key: API_KEY,
+            page
+        }
+    })
+
+    return res.data.results
+}
+
+exports.getTopRatedMovies = async (page = 1) => {
     const res = await axios.get(`${BASE_URL}/movie/top_rated`, {
         params: {
-            api_key: API_KEY
+            api_key: API_KEY,
+            page
         }
     })
     return res.data.results
 }
 
-exports.getUpcomingMovies = async () => {
+exports.getUpcomingMovies = async (page = 1) => {
 
     const res = await axios.get(`${BASE_URL}/movie/upcoming`, {
         params: {
-            api_key: API_KEY
+            api_key: API_KEY,
+            page
         }
     })
     return res.data.results
@@ -71,6 +99,28 @@ exports.getMovieCast = async (movieId) => {
         }
     })
     return res.data.cast
+}
+
+exports.getSimilarMovies = async (movieId) => {
+
+    const res = await axios.get(`${BASE_URL}/movie/${movieId}/similar`, {
+        params: {
+            api_key: API_KEY
+        }
+    })
+
+    return res.data.results
+}
+
+exports.getMovieImages = async (movieId) => {
+
+    const res = await axios.get(`${BASE_URL}/movie/${movieId}/images`, {
+        params: {
+            api_key: API_KEY
+        }
+    })
+
+    return res.data
 }
 
 exports.searchMovies = async (query) => {
