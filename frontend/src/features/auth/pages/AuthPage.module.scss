@@ -1,0 +1,79 @@
+.authWrap {
+  min-height: calc(100vh - 140px);
+  display: grid;
+  place-items: center;
+}
+
+.card {
+  width: min(440px, 100%);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at right top, color-mix(in srgb, var(--accent) 22%, transparent), transparent 30%),
+    var(--card);
+  padding: 26px;
+  box-shadow: var(--elevation-1);
+
+  h1 {
+    color: var(--text);
+    font-size: 30px;
+  }
+
+  p {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+  }
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+    margin-top: 12px;
+    color: var(--text);
+  }
+
+  input {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 74%, #ffffff 26%);
+    color: var(--text);
+    padding: 11px 12px;
+    outline: none;
+  }
+
+  button {
+    margin-top: 16px;
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    background: linear-gradient(120deg, var(--accent), color-mix(in srgb, var(--accent) 70%, #ffffff 30%));
+    color: #fff;
+    cursor: pointer;
+  }
+
+  small {
+    margin-top: 14px;
+    display: inline-block;
+    color: var(--text-secondary);
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+  }
+}
+
+.error {
+  margin-top: 10px;
+  display: block;
+  color: var(--danger);
+}
+
+.brandLink {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 800;
+}
