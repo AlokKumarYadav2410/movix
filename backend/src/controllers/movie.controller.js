@@ -1,5 +1,6 @@
 const movieModel = require("../models/movie.model");
-const { getTrendingMovies, getPopularMovies, getTopRatedMovies, getUpcomingMovies, getMovieDetails, getMovieVideos } = require("../services/tmdb.service");
+const { getTrendingMovies, getPopularMovies, getTopRatedMovies, getUpcomingMovies, getMovieDetails, getMovieVideos, getMovieCast, searchMovies } = require("../services/tmdb.service");
+const formatCast = require("../utils/formatCast");
 const formatMovie = require("../utils/formatMovie");
 const formatMovieDetails = require("../utils/formatMovieDetails");
 
@@ -210,4 +211,63 @@ exports.getMovieVideos = async (req, res) => {
     })
 
   }
+}
+
+exports.getMovieCast = async (req, res) => {
+
+  try {
+
+    const { id } = req.params
+
+    const cast = await getMovieCast(id)
+
+    const formattedCast = cast.slice(0, 10).map(formatCast)
+
+    res.json({
+      success: true,
+      cast: formattedCast
+    })
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: error.message
+    })
+
+  }
+
+}
+
+exports.getSearchMovie = async (req, res) => {
+
+  try {
+
+    const { q } = req.query
+
+    if (!q) {
+      return res.status(400).json({
+        success: false,
+        message: "Search query required"
+      })
+    }
+
+    const movies = await searchMovies(q)
+
+    const formattedMovies = movies.map(formatMovie)
+
+    res.json({
+      success: true,
+      movies: formattedMovies
+    })
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: error.message
+    })
+
+  }
+
 }

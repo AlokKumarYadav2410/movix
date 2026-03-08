@@ -63,3 +63,23 @@ exports.getMovieVideos = async (movieId) => {
     })
     return res.data.results
 }
+
+exports.getMovieCast = async (movieId) => {
+    const res = await axios.get(`${BASE_URL}/movie/${movieId}/credits`, {
+        params: {
+            api_key: API_KEY
+        }
+    })
+    return res.data.cast
+}
+
+exports.searchMovies = async (query) => {
+
+    const res = await axios.get(`${BASE_URL}/search/movie`, {
+        params: {
+            api_key: API_KEY,
+            query: query
+        }
+    })
+    return res.data.results
+}
