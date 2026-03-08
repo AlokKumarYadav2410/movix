@@ -13,19 +13,20 @@ app.use(cors({
 
 const authRouter = require('./routes/auth.routes');
 const favouriteRouter = require("./routes/favourite.routes");
+const historyRouter = require("./routes/history.routes");
+const movieRouter = require("./routes/movie.routes");
+const userRouter = require("./routes/user.routes");
 const testRoutes = require("./routes/test.routes");
+const handleError = require("./middleware/error.middleware");
+
 
 app.use('/api/auth', authRouter);
 app.use("/api/favourites", favouriteRouter);
+app.use("/api/history", historyRouter);
+app.use("/api/movies", movieRouter);
+app.use("/api/users", userRouter);
 app.use("/api/test", testRoutes);
 
-app.use((err, req, res, next) => {
-  console.error(err);
-
-  res.status(500).json({
-    success: false,
-    message: "Internal Server Error"
-  });
-});
+// app.use(handleError);
 
 module.exports = app;
