@@ -1,5 +1,6 @@
 const movieModel = require("../models/movie.model");
 const { getTrendingMovies, getPopularMovies, getTopRatedMovies, getUpcomingMovies, getMovieDetails, getMovieVideos, getMovieCast, searchMovies, getFullMovieData } = require("../services/tmdb.service");
+const cache = require("../utils/cache");
 const formatCast = require("../utils/formatCast");
 const formatMovie = require("../utils/formatMovie");
 const formatMovieDetails = require("../utils/formatMovieDetails");
@@ -86,17 +87,54 @@ exports.deleteMovie = async (req, res) => {
   }
 };
 
+// exports.getTrendingMovies = async (req, res) => {
+
+//   try {
+
+//     const movies = await getTrendingMovies()
+
+//     const formattedMovies = movies.map(formatMovie)
+
+//     res.json({
+//       success: true,
+//       movies: formattedMovies
+//     })
+
+//   } catch (error) {
+
+//     res.status(500).json({
+//       success: false,
+//       message: error.message
+//     })
+
+//   }
+
+// }
+
 exports.getTrendingMovies = async (req, res) => {
 
   try {
+
+    const cachedMovies = cache.get("trending")
+
+    if (cachedMovies) {
+      return res.json({
+        success: true,
+        movies: cachedMovies,
+        source: "cache"
+      })
+    }
 
     const movies = await getTrendingMovies()
 
     const formattedMovies = movies.map(formatMovie)
 
+    cache.set("trending", formattedMovies)
+
     res.json({
       success: true,
-      movies: formattedMovies
+      movies: formattedMovies,
+      source: "api"
     })
 
   } catch (error) {
