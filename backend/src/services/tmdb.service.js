@@ -24,3 +24,22 @@ exports.getPopularMovies = async () => {
 
     return res.data.results
 }
+
+exports.getTopRatedMovies = async () => {
+    const res = await axios.get(`${BASE_URL}/movie/top_rated`, {
+        params: {
+            api_key: API_KEY
+        }
+    })
+    return res.data.results
+}
+
+exports.getUpcomingMovies = async () => {
+
+    const res = await axios.get(`${BASE_URL}/movie/upcoming`, {
+        params: {
+            api_key: API_KEY
+        }
+    })
+    return res.data.results
+}
