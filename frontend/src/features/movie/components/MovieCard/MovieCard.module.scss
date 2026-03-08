@@ -1,0 +1,61 @@
+.card {
+  width: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.card {
+  min-width: 180px;
+  height: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+.card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.info {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.9),
+    transparent
+  );
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  h4{
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rating {
+  display: flex;
+  gap: 4px;
+  color: var(--text-secondary);
+}
+
+.play {
+  background: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%;
+  padding: 6px;
+}
+
