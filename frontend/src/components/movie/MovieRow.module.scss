@@ -1,0 +1,59 @@
+.row {
+  margin-top: 36px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 16px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+
+  button {
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+    &:hover {
+      background: var(--primary);
+      color: white;
+    }
+  }
+}
+
+.movies {
+  display: flex;
+  gap: 16px;
+
+  overflow-x: auto;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+
+  padding-bottom: 6px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.movies > * {
+  scroll-snap-align: start;
+}
