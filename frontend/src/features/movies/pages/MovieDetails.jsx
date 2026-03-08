@@ -61,20 +61,11 @@ const MovieDetails = () => {
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login", { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      return;
-    }
     dispatch(fetchMovieById(movieId));
     return () => {
       dispatch(clearMovieDetails());
     };
-  }, [dispatch, movieId, isAuthenticated]);
+  }, [dispatch, movieId]);
 
   useEffect(() => {
     if (!isAuthenticated) {

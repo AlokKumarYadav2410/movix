@@ -21,14 +21,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "explore", element: <Explore /> },
-      {
-        path: "movies/:movieId",
-        element: (
-          <RequireAuth>
-            <MovieDetails />
-          </RequireAuth>
-        )
-      },
+      { path: "movies/:movieId", element: <MovieDetails /> },
       {
         path: "favourites",
         element: (

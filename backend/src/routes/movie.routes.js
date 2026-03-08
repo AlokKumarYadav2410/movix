@@ -13,13 +13,13 @@ movieRouter.get("/popular-tv", movieController.getPopularTvShows);
 movieRouter.get("/popular-people", movieController.getPopularPeople);
 movieRouter.get("/upcoming", authMiddleware, movieController.getUpcomingMovies);
 
-movieRouter.get("/search", authMiddleware, movieController.getSearchMovie);
+movieRouter.get("/search", movieController.getSearchMovie);
 
-movieRouter.get("/:id/full", authMiddleware, movieController.getFullMovie);
+movieRouter.get("/:id/full", movieController.getFullMovie);
 
-movieRouter.get("/:id", authMiddleware, movieController.getMovieDetails);
-movieRouter.get("/:id/videos", authMiddleware, movieController.getMovieVideos);
-movieRouter.get("/:id/cast", authMiddleware, movieController.getMovieCast);
+movieRouter.get("/:id", movieController.getMovieDetails);
+movieRouter.get("/:id/videos", movieController.getMovieVideos);
+movieRouter.get("/:id/cast", movieController.getMovieCast);
 movieRouter.post("/", authMiddleware, adminMiddleware, movieController.addMovie);
 movieRouter.put("/:id", authMiddleware, adminMiddleware, movieController.updateMovie);
 movieRouter.delete("/:id", authMiddleware, adminMiddleware, movieController.deleteMovie);

@@ -36,13 +36,13 @@ const Register = () => {
         </p>
 
         <label htmlFor="name">Name</label>
-        <input id="name" name="name" type="text" value={form.name} onChange={onChange} required />
+        <input id="name" name="name" type="text" value={form.name} onChange={onChange} placeholder="Username" required />
 
         <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" value={form.email} onChange={onChange} required />
+        <input id="email" name="email" type="email" value={form.email} onChange={onChange} placeholder="your@gmail.com" required />
 
         <label htmlFor="password">Password</label>
-        <input id="password" name="password" type="password" value={form.password} onChange={onChange} required minLength={6} />
+        <input id="password" name="password" type="password" value={form.password} onChange={onChange} placeholder="••••••••" required minLength={6} />
 
         {error ? <span className={styles.error}>{error}</span> : null}
 

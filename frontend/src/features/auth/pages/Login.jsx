@@ -34,10 +34,10 @@ const Login = () => {
         <p>Login to save favourites and continue your watch history.</p>
 
         <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" value={form.email} onChange={onChange} required />
+        <input id="email" name="email" type="email" value={form.email} onChange={onChange} placeholder="your@gmail.com" required />
 
         <label htmlFor="password">Password</label>
-        <input id="password" name="password" type="password" value={form.password} onChange={onChange} required />
+        <input id="password" name="password" type="password" value={form.password} onChange={onChange} placeholder="••••••••" required />
 
         {error ? <span className={styles.error}>{error}</span> : null}
 
