@@ -26,7 +26,7 @@ exports.banUser = async (req, res) => {
     const user = await userModel.findByIdAndUpdate(
       id,
       { isBanned: true },
-      { new: true }
+      { returnDocument: "after" }
     );
 
     res.status(200).json({
@@ -51,7 +51,7 @@ exports.unbanUser = async (req, res) => {
     const user = await userModel.findByIdAndUpdate(
       id,
       { isBanned: false },
-      { new: true }
+      { returnDocument: "after" }
     );
 
     res.status(200).json({

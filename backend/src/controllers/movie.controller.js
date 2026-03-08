@@ -1,9 +1,12 @@
 const movieModel = require("../models/movie.model");
-const { getTrendingMovies, getPopularMovies, getTopRatedMovies, getUpcomingMovies, getMovieDetails, getMovieVideos, getMovieCast, searchMovies, getFullMovieData } = require("../services/tmdb.service");
+const { getTrendingMovies, getPopularMovies, getPopularTvShows, getPopularPeople, getTopRatedMovies, getUpcomingMovies, getMovieDetails, getMovieVideos, getMovieCast, getMovieImages, getSimilarMovies, searchMovies, getFullMovieData } = require("../services/tmdb.service");
 const cache = require("../utils/cache");
 const formatCast = require("../utils/formatCast");
 const formatMovie = require("../utils/formatMovie");
+const formatPerson = require("../utils/formatPerson");
 const formatMovieDetails = require("../utils/formatMovieDetails");
+
+const IMAGE_BASE = "https://image.tmdb.org/t/p";
 
 exports.addMovie = async (req, res) => {
   try {
@@ -50,7 +53,7 @@ exports.updateMovie = async (req, res) => {
     const movie = await movieModel.findByIdAndUpdate(
       id,
       req.body,
-      { new: true }
+      { returnDocument: "after" }
     );
 
     res.status(200).json({
@@ -115,7 +118,10 @@ exports.getTrendingMovies = async (req, res) => {
 
   try {
 
-    const cachedMovies = cache.get("trending")
+    const page = Number(req.query.page) || 1;
+    const cacheKey = `trending:${page}`;
+
+    const cachedMovies = cache.get(cacheKey)
 
     if (cachedMovies) {
       return res.json({
@@ -125,11 +131,11 @@ exports.getTrendingMovies = async (req, res) => {
       })
     }
 
-    const movies = await getTrendingMovies()
+    const movies = await getTrendingMovies(page)
 
     const formattedMovies = movies.map(formatMovie)
 
-    cache.set("trending", formattedMovies)
+    cache.set(cacheKey, formattedMovies)
 
     res.json({
       success: true,
@@ -150,7 +156,8 @@ exports.getTrendingMovies = async (req, res) => {
 
 exports.getPopularMovies = async (req, res) => {
   try {
-    const movies = await getPopularMovies()
+    const page = Number(req.query.page) || 1
+    const movies = await getPopularMovies(page)
     const formattedMovies = movies.map(formatMovie)
     res.json({
       success: true,
@@ -167,7 +174,8 @@ exports.getPopularMovies = async (req, res) => {
 
 exports.getTopRatedMovies = async (req, res) => {
   try {
-    const movies = await getTopRatedMovies()
+    const page = Number(req.query.page) || 1
+    const movies = await getTopRatedMovies(page)
     const formattedMovies = movies.map(formatMovie)
     res.json({
       success: true,
@@ -184,7 +192,8 @@ exports.getTopRatedMovies = async (req, res) => {
 
 exports.getUpcomingMovies = async (req, res) => {
   try {
-    const movies = await getUpcomingMovies()
+    const page = Number(req.query.page) || 1
+    const movies = await getUpcomingMovies(page)
     const formattedMovies = movies.map(formatMovie)
     res.json({
       success: true,
@@ -316,13 +325,24 @@ exports.getFullMovie = async (req, res) => {
 
     const { id } = req.params
 
-    const data = await getFullMovieData(id)
+    const [data, similar, images] = await Promise.all([
+      getFullMovieData(id),
+      getSimilarMovies(id),
+      getMovieImages(id)
+    ])
+
+    const mediaImages = (images?.backdrops || [])
+      .filter((item) => Boolean(item?.file_path))
+      .slice(0, 12)
+      .map((item) => `${IMAGE_BASE}/w1280${item.file_path}`)
 
     res.json({
       success: true,
       movie: formatMovieDetails(data.movie),
       trailer: data.videos.find(v => v.type === "Trailer"),
-      cast: data.cast.slice(0,10).map(formatCast)
+      cast: data.cast.slice(0,10).map(formatCast),
+      mediaImages,
+      similar: similar.slice(0, 12).map(formatMovie)
     })
 
   } catch (error) {
@@ -334,4 +354,40 @@ exports.getFullMovie = async (req, res) => {
 
   }
 
+}
+
+exports.getPopularTvShows = async (req, res) => {
+  try {
+    const page = Number(req.query.page) || 1
+    const shows = await getPopularTvShows(page)
+    const formattedShows = shows.map(formatMovie)
+    res.json({
+      success: true,
+      shows: formattedShows
+    })
+  }
+  catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    })
+  }
+}
+
+exports.getPopularPeople = async (req, res) => {
+  try {
+    const page = Number(req.query.page) || 1
+    const people = await getPopularPeople(page)
+    const formattedPeople = people.map(formatPerson)
+    res.json({
+      success: true,
+      people: formattedPeople
+    })
+  }
+  catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    })
+  }
 }
