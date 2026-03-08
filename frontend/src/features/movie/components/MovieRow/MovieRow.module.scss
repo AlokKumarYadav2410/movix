@@ -1,0 +1,62 @@
+.row {
+  margin-top: 28px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+
+  button {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: var(--border);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background: rgba(255,255,255,0.1);
+    }
+  }
+}
+.viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+//   width: 100%;
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.slider {
+  display: flex;
+  gap: 14px;
+  cursor: grab;
+  width: max-content;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
