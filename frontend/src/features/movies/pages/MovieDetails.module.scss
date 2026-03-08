@@ -1,0 +1,288 @@
+.details {
+  display: grid;
+  gap: 24px;
+}
+
+.heroBackdropWrap {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.backBtn {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  padding: 8px 12px;
+  background: rgba(15, 23, 42, 0.52);
+  color: #f8fafc;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.backdropImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+}
+
+.backdropOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    
+    radial-gradient(circle at 85% 10%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 35%);
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) 1fr;
+  gap: 20px;
+  padding: 16px;
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+  backdrop-filter: blur(4px);
+
+  img {
+    width: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+  }
+}
+
+.info {
+  h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  p {
+    margin-top: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+}
+
+.stats {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--border);
+    background-color: var(--card);
+    opacity: 0.8;
+    border-radius: 999px;
+    padding: 8px 12px;
+  }
+}
+
+.ratingHigh {
+  color: #16a34a;
+}
+
+.ratingMedium {
+  color: #eab308;
+}
+
+.ratingLow {
+  color: #dc2626;
+}
+
+.genres {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.genreBadge {
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: color-mix(in srgb, var(--accent) 50%, transparent);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.actions {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.trailer,
+.fav {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.trailer {
+  background: var(--accent);
+  color: #fff;
+}
+
+.fav {
+  background: color-mix(in srgb, var(--danger) 24%, transparent);
+  color: var(--text);
+}
+
+.trailer:hover {
+  background: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.fav:hover {
+  background: color-mix(in srgb, var(--danger) 42%, transparent);
+}
+
+.trailer:active, .fav:active {
+  transform: scale(0.9);
+}
+
+.castSection {
+  h2 {
+    color: var(--text);
+  }
+}
+
+.castGrid {
+  margin-top: 12px;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+}
+
+.castCard {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card);
+
+  img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+  }
+
+  p,
+  small {
+    display: block;
+    padding: 0 8px 8px;
+  }
+
+  p {
+    padding-top: 8px;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  small {
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+}
+
+.mediaSection {
+  h2 {
+    color: var(--text);
+  }
+}
+
+.mediaGrid {
+  margin-top: 12px;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.mediaCard {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card);
+  display: block;
+
+  img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.moreSection {
+  h2 {
+    color: var(--text);
+  }
+}
+
+.moreGrid {
+  margin-top: 12px;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+}
+
+.moreCard {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card);
+  color: inherit;
+  text-decoration: none;
+
+  img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+  }
+
+  p {
+    display: block;
+    padding: 8px;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+}
+
+.empty {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .backBtn {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    // padding-top: 56px;
+  }
+}

@@ -1,0 +1,47 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  display: grid;
+  place-items: center;
+  z-index: 120;
+  padding: 16px;
+}
+
+.modal {
+  width: min(900px, 100%);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+
+  h3 {
+    font-size: 16px;
+    color: var(--text);
+  }
+
+  button {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+  }
+}
+
+iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: 0;
+}
+
+.empty {
+  padding: 36px 18px;
+  color: var(--text-secondary);
+}
