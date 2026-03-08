@@ -1,0 +1,52 @@
+.row {
+  display: grid;
+  gap: 12px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: clamp(18px, 2vw, 24px);
+    color: var(--text);
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+
+  button {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--card) 88%, #ffffff 12%);
+    color: var(--text);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+}
+
+.viewport {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(180px, 220px);
+  gap: 14px;
+}
+
+.item {
+  min-width: 0;
+}
