@@ -21,6 +21,8 @@ const historySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+historySchema.index({ userId: 1, movieId: 1 });
+
 const historyModel = mongoose.model("history", historySchema);
 
 module.exports = historyModel;

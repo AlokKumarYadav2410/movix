@@ -6,9 +6,11 @@ const authMiddleware = require("../middleware/auth.middleware");
 const adminMiddleware = require("../middleware/admin.middleware");
 
 movieRouter.get("/", authMiddleware, movieController.getMovies);
-movieRouter.get("/trending", authMiddleware, movieController.getTrendingMovies);
-movieRouter.get("/popular", authMiddleware, movieController.getPopularMovies);
-movieRouter.get("/top-rated", authMiddleware, movieController.getTopRatedMovies);
+movieRouter.get("/trending", movieController.getTrendingMovies);
+movieRouter.get("/popular", movieController.getPopularMovies);
+movieRouter.get("/top-rated", movieController.getTopRatedMovies);
+movieRouter.get("/popular-tv", movieController.getPopularTvShows);
+movieRouter.get("/popular-people", movieController.getPopularPeople);
 movieRouter.get("/upcoming", authMiddleware, movieController.getUpcomingMovies);
 
 movieRouter.get("/search", authMiddleware, movieController.getSearchMovie);
