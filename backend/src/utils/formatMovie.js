@@ -19,7 +19,8 @@ const formatMovie = (movie) => {
 
         genres: movie.genre_ids || [],
         voteCount: movie.vote_count || 0,
-        voteAverage: movie.vote_average || 0
+        voteAverage: movie.vote_average || 0,
+        mediaType: movie.media_type || (movie.first_air_date ? "tv" : "movie")
     }
 
 }

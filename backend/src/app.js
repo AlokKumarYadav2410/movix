@@ -1,7 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require("cors")
-const apiLimiter = require("../src/middleware/rateLimiter.middleware");
+const { apiLimiter, authLimiter } = require("../src/middleware/rateLimiter.middleware");
 
 const app = express();
 
@@ -12,6 +12,8 @@ app.use(cors({
   credentials: true
 }));
 
+app.use("/api/auth/login", authLimiter)
+app.use("/api/auth/register", authLimiter)
 app.use("/api", apiLimiter)
 
 const authRouter = require('./routes/auth.routes');
