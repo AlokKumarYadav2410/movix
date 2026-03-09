@@ -5,7 +5,7 @@ import TrailerModal from "../../movies/components/TrailerModal";
 import SkeletonLoader from "../../../shared/ui/SkeletonLoader";
 import { fetchMovieById } from "../../movies/redux/movieSlice";
 import { getMovieDetailsApi } from "../../movies/api/movie.api";
-import { clearHistory, fetchHistory } from "../redux/userSlice";
+import { clearHistory, fetchHistory, removeHistoryItem } from "../redux/userSlice";
 import styles from "./UserPages.module.scss";
 
 const History = () => {
@@ -65,13 +65,21 @@ const History = () => {
       ) : movies.length ? (
         <div className={styles.grid}>
           {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              isFavourite={false}
-              onToggleFavourite={() => {}}
-              onWatchTrailer={openTrailer}
-            />
+            <div key={movie.id} className={styles.historyItem}>
+              <MovieCard
+                movie={movie}
+                isFavourite={false}
+                onToggleFavourite={() => {}}
+                onWatchTrailer={openTrailer}
+              />
+              <button
+                type="button"
+                className={styles.removeBtn}
+                onClick={() => dispatch(removeHistoryItem(String(movie.id)))}
+              >
+                Remove from history
+              </button>
+            </div>
           ))}
         </div>
       ) : (

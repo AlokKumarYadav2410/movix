@@ -35,10 +35,48 @@
   }
 }
 
-iframe {
+.playerWrap {
+  position: relative;
   width: 100%;
   aspect-ratio: 16/9;
-  border: 0;
+  background: #000;
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    transition: opacity 0.24s ease;
+  }
+}
+
+.hiddenFrame {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(110deg, color-mix(in srgb, var(--card) 84%, #fff 16%) 8%, color-mix(in srgb, var(--card) 64%, #525050 36%) 18%, color-mix(in srgb, var(--card) 84%, #fff 16%) 33%);
+  background-size: 220% 100%;
+  animation: shimmer 1.2s forwards infinite;
+  opacity: 1;
+  transition: opacity 0.32s ease;
+}
+
+.skeletonHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  to {
+    background-position-x: -220%;
+  }
 }
 
 .empty {
