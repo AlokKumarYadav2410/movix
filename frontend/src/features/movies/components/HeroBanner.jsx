@@ -12,6 +12,7 @@ const HeroBanner = ({ movie, onWatchTrailer }) => {
 
   const rating = Number(movie?.rating);
   const formattedRating = Number.isFinite(rating) ? rating.toFixed(1) : "N/A";
+  const mediaType = movie?.mediaType === "tv" ? "tv" : "movie";
 
   return (
     <motion.section
@@ -33,7 +34,7 @@ const HeroBanner = ({ movie, onWatchTrailer }) => {
         <h1>{movie.title || "Untitled movie"}</h1>
         <p>{movie.description || "Description not available"}</p>
         <div className={styles.actions}>
-          <Link className={styles.primary} to={movie?.mediaType === "movie" ? `/movies/${movie.id}` : "/explore"}>
+          <Link className={styles.primary} to={`/movies/${movie.id}?type=${encodeURIComponent(mediaType)}`}>
             View Details
           </Link>
           <button type="button" className={styles.ghost} onClick={() => onWatchTrailer?.(movie)}>

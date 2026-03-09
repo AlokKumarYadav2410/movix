@@ -51,7 +51,7 @@ const Home = () => {
 
   const openTrailer = async (movie) => {
     try {
-      const payload = await dispatch(fetchMovieById(movie.id)).unwrap();
+      const payload = await dispatch(fetchMovieById({ id: movie.id, mediaType: movie?.mediaType || "movie" })).unwrap();
       setTrailerKey(payload?.trailer?.key || "");
       setTrailerTitle(movie.title || "Movie trailer");
       setIsTrailerOpen(true);
