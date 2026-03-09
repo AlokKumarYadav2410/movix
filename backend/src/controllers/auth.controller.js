@@ -145,15 +145,10 @@ exports.logoutUser = async (req, res) => {
 
         const token = req.cookies.token;
 
-        if (!token) {
-            return res.status(400).json({
-                success: false,
-                message: "Token not found"
-            });
+        // Keep logout idempotent: token may already be missing/expired on client.
+        if (token) {
+            await blacklistModel.create({ token });
         }
-
-        // add token to blacklist
-        await blacklistModel.create({ token });
 
         res.clearCookie("token");
 
