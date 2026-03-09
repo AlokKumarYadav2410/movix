@@ -102,3 +102,24 @@ exports.clearHistory = async (req, res) => {
         });
     }
 };
+
+exports.removeHistoryItem = async (req, res) => {
+    try {
+
+        const userId = req.user.userId;
+        const { movieId } = req.params;
+
+        await historyModel.deleteOne({ userId, movieId: String(movieId) });
+
+        res.status(200).json({
+            success: true,
+            message: "History item removed"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
