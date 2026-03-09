@@ -5,7 +5,8 @@ import {
   clearHistoryApi,
   getFavouritesApi,
   getHistoryApi,
-  removeFavouriteApi
+  removeFavouriteApi,
+  removeHistoryItemApi
 } from "../api/user.api";
 import { getErrorMessage } from "../../../shared/api/client";
 
@@ -93,6 +94,18 @@ export const clearHistory = createAsyncThunk(
   }
 );
 
+export const removeHistoryItem = createAsyncThunk(
+  "user/removeHistoryItem",
+  async (movieId, { rejectWithValue }) => {
+    try {
+      await removeHistoryItemApi(movieId);
+      return String(movieId);
+    } catch (error) {
+      return rejectWithValue(getErrorMessage(error, "Failed to remove history item"));
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -147,6 +160,9 @@ const userSlice = createSlice({
       })
       .addCase(clearHistory.fulfilled, (state) => {
         state.history = [];
+      })
+      .addCase(removeHistoryItem.fulfilled, (state, action) => {
+        state.history = state.history.filter((item) => String(item.movieId) !== action.payload);
       })
       .addMatcher(
         (action) => action.type.startsWith("user/") && action.type.endsWith("/rejected"),

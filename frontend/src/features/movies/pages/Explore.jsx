@@ -10,12 +10,11 @@ import { fetchExploreMovies, fetchMovieById, searchMovies } from "../redux/movie
 import { addFavourite, addHistory, fetchFavourites, removeFavourite } from "../../user/redux/userSlice";
 import styles from "./Explore.module.scss";
 
-const PAGE_SIZE = 18;
-
 const Explore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sentinelRef = useRef(null);
+  const canAutoLoadRef = useRef(true);
 
   const { allMovies, searchResults, searchQuery, exploreLoading, searchLoading, explorePage, exploreHasMore } = useMovies();
   const { favourites } = useSelector((state) => state.user);
@@ -34,8 +33,10 @@ const Explore = () => {
   const isLoadingMoreRef = useRef(false);
 
   useEffect(() => {
-    dispatch(fetchExploreMovies(1));
-  }, [dispatch]);
+    if (allMovies.length === 0) {
+      dispatch(fetchExploreMovies(1));
+    }
+  }, [allMovies.length, dispatch]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -92,6 +93,7 @@ const Explore = () => {
     setIsFetchingMore(false);
     setIsLoadingMorePage(false);
     isLoadingMoreRef.current = false;
+    canAutoLoadRef.current = true;
   }, [debouncedSearch, mediaTypeFilter, minRating, sortBy, yearFilter]);
 
   const loadMoreMovies = useCallback(() => {
@@ -122,9 +124,19 @@ const Explore = () => {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          loadMoreMovies();
+        const entry = entries[0];
+
+        if (!entry.isIntersecting) {
+          canAutoLoadRef.current = true;
+          return;
         }
+
+        if (!canAutoLoadRef.current) {
+          return;
+        }
+
+        canAutoLoadRef.current = false;
+        loadMoreMovies();
       },
       { threshold: 0.25 }
     );
@@ -152,7 +164,7 @@ const Explore = () => {
 
   const openTrailer = async (movie) => {
     try {
-      const payload = await dispatch(fetchMovieById(movie.id)).unwrap();
+      const payload = await dispatch(fetchMovieById({ id: movie.id, mediaType: movie?.mediaType || "movie" })).unwrap();
       setTrailerKey(payload?.trailer?.key || "");
       setTrailerTitle(movie.title || "Movie trailer");
       setIsTrailerOpen(true);
