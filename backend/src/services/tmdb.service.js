@@ -3,6 +3,10 @@ const axios = require("axios")
 const BASE_URL = process.env.TMDB_BASE_URL
 const API_KEY = process.env.TMDB_API_KEY
 
+const normalizeMediaType = (mediaType = "movie") => {
+    return mediaType === "tv" ? "tv" : "movie"
+}
+
 exports.getTrendingMovies = async (page = 1) => {
 
     const res = await axios.get(`${BASE_URL}/trending/movie/week`, {
@@ -72,9 +76,11 @@ exports.getUpcomingMovies = async (page = 1) => {
     return res.data.results
 }
 
-exports.getMovieDetails = async (movieId) => {
+exports.getMovieDetails = async (movieId, mediaType = "movie") => {
 
-    const res = await axios.get(`${BASE_URL}/movie/${movieId}`, {
+    const resource = normalizeMediaType(mediaType)
+
+    const res = await axios.get(`${BASE_URL}/${resource}/${movieId}`, {
         params: {
             api_key: API_KEY
         }
@@ -82,9 +88,11 @@ exports.getMovieDetails = async (movieId) => {
     return res.data
 }
 
-exports.getMovieVideos = async (movieId) => {
+exports.getMovieVideos = async (movieId, mediaType = "movie") => {
 
-    const res = await axios.get(`${BASE_URL}/movie/${movieId}/videos`, {
+    const resource = normalizeMediaType(mediaType)
+
+    const res = await axios.get(`${BASE_URL}/${resource}/${movieId}/videos`, {
         params: {
             api_key: API_KEY
         }
@@ -92,8 +100,10 @@ exports.getMovieVideos = async (movieId) => {
     return res.data.results
 }
 
-exports.getMovieCast = async (movieId) => {
-    const res = await axios.get(`${BASE_URL}/movie/${movieId}/credits`, {
+exports.getMovieCast = async (movieId, mediaType = "movie") => {
+    const resource = normalizeMediaType(mediaType)
+
+    const res = await axios.get(`${BASE_URL}/${resource}/${movieId}/credits`, {
         params: {
             api_key: API_KEY
         }
@@ -101,9 +111,11 @@ exports.getMovieCast = async (movieId) => {
     return res.data.cast
 }
 
-exports.getSimilarMovies = async (movieId) => {
+exports.getSimilarMovies = async (movieId, mediaType = "movie") => {
 
-    const res = await axios.get(`${BASE_URL}/movie/${movieId}/similar`, {
+    const resource = normalizeMediaType(mediaType)
+
+    const res = await axios.get(`${BASE_URL}/${resource}/${movieId}/similar`, {
         params: {
             api_key: API_KEY
         }
@@ -112,9 +124,11 @@ exports.getSimilarMovies = async (movieId) => {
     return res.data.results
 }
 
-exports.getMovieImages = async (movieId) => {
+exports.getMovieImages = async (movieId, mediaType = "movie") => {
 
-    const res = await axios.get(`${BASE_URL}/movie/${movieId}/images`, {
+    const resource = normalizeMediaType(mediaType)
+
+    const res = await axios.get(`${BASE_URL}/${resource}/${movieId}/images`, {
         params: {
             api_key: API_KEY
         }
@@ -134,19 +148,21 @@ exports.searchMovies = async (query) => {
     return res.data.results
 }
 
-exports.getFullMovieData = async (id) => {
+exports.getFullMovieData = async (id, mediaType = "movie") => {
+
+    const resource = normalizeMediaType(mediaType)
 
   const [details, videos, credits] = await Promise.all([
 
-    axios.get(`${BASE_URL}/movie/${id}`, {
+        axios.get(`${BASE_URL}/${resource}/${id}`, {
       params: { api_key: API_KEY }
     }),
 
-    axios.get(`${BASE_URL}/movie/${id}/videos`, {
+        axios.get(`${BASE_URL}/${resource}/${id}/videos`, {
       params: { api_key: API_KEY }
     }),
 
-    axios.get(`${BASE_URL}/movie/${id}/credits`, {
+        axios.get(`${BASE_URL}/${resource}/${id}/credits`, {
       params: { api_key: API_KEY }
     })
 

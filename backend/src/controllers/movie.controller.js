@@ -324,12 +324,17 @@ exports.getFullMovie = async (req, res) => {
   try {
 
     const { id } = req.params
+    const mediaType = req.query.type === "tv" ? "tv" : "movie"
 
     const [data, similar, images] = await Promise.all([
-      getFullMovieData(id),
-      getSimilarMovies(id),
-      getMovieImages(id)
+      getFullMovieData(id, mediaType),
+      getSimilarMovies(id, mediaType),
+      getMovieImages(id, mediaType)
     ])
+
+    const trailer = data.videos.find(
+      (video) => video.type === "Trailer" && video.site === "YouTube"
+    ) || data.videos.find((video) => video.site === "YouTube") || null
 
     const mediaImages = (images?.backdrops || [])
       .filter((item) => Boolean(item?.file_path))
@@ -338,8 +343,8 @@ exports.getFullMovie = async (req, res) => {
 
     res.json({
       success: true,
-      movie: formatMovieDetails(data.movie),
-      trailer: data.videos.find(v => v.type === "Trailer"),
+      movie: formatMovieDetails(data.movie, mediaType),
+      trailer,
       cast: data.cast.slice(0,10).map(formatCast),
       mediaImages,
       similar: similar.slice(0, 12).map(formatMovie)
