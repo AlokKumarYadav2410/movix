@@ -35,9 +35,13 @@ const MovieCard = ({ movie, isFavourite, onToggleFavourite, onWatchTrailer }) =>
   const ratingToneClass = getRatingToneClass(movie?.rating, styles);
   const mediaType = movie?.mediaType || "movie";
   const isMovie = mediaType === "movie";
+  const isTv = mediaType === "tv";
   const isPerson = mediaType === "person";
+  const isPlayable = isMovie || isTv;
   const isNavigable = !isPerson;
-  const detailsPath = isMovie ? `/movies/${movie.id}` : `/explore?type=${encodeURIComponent(mediaType)}`;
+  const detailsPath = isPlayable
+    ? `/movies/${movie.id}?type=${encodeURIComponent(mediaType)}`
+    : `/explore?type=${encodeURIComponent(mediaType)}`;
   const mediaTypeLabel = mediaType === "tv" ? "TV" : mediaType === "person" ? "Person" : "Movie";
 
   return (
@@ -73,7 +77,7 @@ const MovieCard = ({ movie, isFavourite, onToggleFavourite, onWatchTrailer }) =>
             </span>
           ) : <span />}
           <div className={styles.actions}>
-            {isMovie ? (
+            {isPlayable ? (
               <>
                 <button
                   type="button"

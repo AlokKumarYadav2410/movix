@@ -29,3 +29,8 @@ export const clearHistoryApi = async () => {
   const { data } = await apiClient.delete("/history");
   return data;
 };
+
+export const removeHistoryItemApi = async (movieId) => {
+  const { data } = await apiClient.delete(`/history/${movieId}`);
+  return data;
+};

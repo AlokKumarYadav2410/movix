@@ -22,7 +22,7 @@ export const fetchHomeMovies = createAsyncThunk(
         getPopularMoviesApi(),
         getPopularTvShowsApi(),
         getPopularPeopleApi(),
-        isAuthenticated ? getTopRatedMoviesApi() : Promise.resolve({ movies: [] })
+        getTopRatedMoviesApi()
       ]);
 
       return {
@@ -77,9 +77,11 @@ export const fetchExploreMovies = createAsyncThunk(
 
 export const fetchMovieById = createAsyncThunk(
   "movies/fetchMovieById",
-  async (movieId, { rejectWithValue }) => {
+  async (payload, { rejectWithValue }) => {
     try {
-      const data = await getFullMovieApi(movieId);
+      const movieId = typeof payload === "object" ? payload?.id : payload;
+      const mediaType = typeof payload === "object" ? payload?.mediaType : "movie";
+      const data = await getFullMovieApi(movieId, mediaType);
       return {
         movie: data?.movie || null,
         trailer: data?.trailer || null,

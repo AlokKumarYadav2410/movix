@@ -277,8 +277,10 @@
 
 @media (max-width: 900px) {
   .backBtn {
-    bottom: 10px;
-    right: 10px;
+    top: 20px;
+    left: 20px;
+    bottom: auto;
+    right: auto;
   }
 
   .hero {

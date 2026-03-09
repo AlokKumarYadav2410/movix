@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { ArrowLeft, CalendarDays, Clock8, Heart, PlayCircle, Star } from "lucide-react";
 import TrailerModal from "../components/TrailerModal";
 import SkeletonLoader from "../../../shared/ui/SkeletonLoader";
@@ -51,6 +51,7 @@ const getFormattedReleaseDate = (value) => {
 
 const MovieDetails = () => {
   const { movieId } = useParams();
+  const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -59,13 +60,14 @@ const MovieDetails = () => {
   const isAuthenticated = useSelector((state) => Boolean(state.auth.user));
 
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+  const mediaType = searchParams.get("type") === "tv" ? "tv" : "movie";
 
   useEffect(() => {
-    dispatch(fetchMovieById(movieId));
+    dispatch(fetchMovieById({ id: movieId, mediaType }));
     return () => {
       dispatch(clearMovieDetails());
     };
-  }, [dispatch, movieId]);
+  }, [dispatch, movieId, mediaType]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -123,7 +125,7 @@ const MovieDetails = () => {
     <article className={styles.details}>
       <section className={styles.heroBackdropWrap}>
         <button type="button" className={styles.backBtn} onClick={goBack}>
-          <ArrowLeft size={16} /> Back
+          <ArrowLeft size={16} /> <span>Back</span>
         </button>
 
         <img
@@ -215,7 +217,7 @@ const MovieDetails = () => {
         <div className={styles.moreGrid}>
           {currentSimilar.length ? (
             currentSimilar.map((movie) => (
-              <Link key={movie.id} to={`/movies/${movie.id}`} className={styles.moreCard}>
+              <Link key={movie.id} to={`/movies/${movie.id}?type=${encodeURIComponent(movie?.mediaType || mediaType)}`} className={styles.moreCard}>
                 <img src={movie.poster || FALLBACK_POSTER} alt={movie.title || "Movie"} loading="lazy" />
                 <p>{movie.title || "Untitled movie"}</p>
               </Link>
