@@ -39,6 +39,8 @@ const Navbar = ({ onOpenMenu }) => {
       </div>
 
       <div className={styles.actions}>
+        <h3>Hi, {user ? user.name : "Guest"}</h3>
+        <ThemeToggle />
         <button
           type="button"
           className={styles.menuBtn}
@@ -47,11 +49,7 @@ const Navbar = ({ onOpenMenu }) => {
         >
           <Menu size={18} />
         </button>
-        <h3>Hi, {user ? user.name : "Guest"}</h3>
-        <ThemeToggle />
-
       </div>
-
     </motion.div>
   )
 }

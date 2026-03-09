@@ -6,12 +6,10 @@
 
 .card {
   border-radius: 16px;
-  background: linear-gradient(
-    110deg,
-    color-mix(in srgb, var(--card) 92%, #292828) 8%,
-    color-mix(in srgb, var(--card) 75%, #292828) 25%,
-    color-mix(in srgb, var(--card) 92%, #292828) 8%
-  );
+  background: linear-gradient(110deg,
+      color-mix(in srgb, var(--card) 92%, #525050) 8%,
+      color-mix(in srgb, var(--card) 75%, #525050) 25%,
+      color-mix(in srgb, var(--card) 92%, #525050) 8%);
   background-size: 200% 100%;
   animation: pulse 1.2s linear infinite;
 }
