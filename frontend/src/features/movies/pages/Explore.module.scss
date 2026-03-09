@@ -51,6 +51,7 @@
 }
 
 @keyframes loadPulse {
+
   0%,
   100% {
     transform: translateY(0);
@@ -87,6 +88,6 @@
 
 @media (max-width: 780px) {
   .filters {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }

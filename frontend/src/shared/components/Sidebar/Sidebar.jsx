@@ -39,10 +39,9 @@ const Sidebar = ({ isOpen, onClose }) => {
       <aside
         className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}
       >
-
         <div className={styles.head}>
           <NavLink to="/" onClick={onClose} className={styles.logo}>
-           <Clapperboard size={32} color="#ff0000" />
+            <Clapperboard size={32} color="#ff0000" />
             <span>Movix</span>
           </NavLink>
 
@@ -50,8 +49,8 @@ const Sidebar = ({ isOpen, onClose }) => {
             <X size={18} />
           </button>
         </div>
-
         <nav className={styles.menu}>
+          {user ? <p className={styles.userName + " " + styles.mobileOnly}>Hi, {user.name}</p> : <p className={styles.userName + " " + styles.mobileOnly}>Hi, Guest</p>}
 
           {menuItems.map((item) => (
             <NavLink
@@ -64,11 +63,26 @@ const Sidebar = ({ isOpen, onClose }) => {
               <span>{item.name}</span>
             </NavLink>
           ))}
-
+          <div className={styles.authActions}>
+            {user ? (
+              <>
+                <button type="button" className={styles.actionBtn + " " + styles.mobileOnly} onClick={handleLogout}>
+                  <LogOut size={16} />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <NavLink to="/login" onClick={onClose} className={styles.actionBtn + " " + styles.mobileOnly}>
+                <LogIn size={16} />
+                Login
+              </NavLink>
+            )}
+          </div>
         </nav>
 
-        <div className={styles.authActions}>
+        <div className={styles.authActions + " " + styles.desktopOnly}>
           {user ? (
+
             <>
               <p className={styles.userName}>Hi, {user.name}</p>
               <button type="button" className={styles.actionBtn} onClick={handleLogout}>
@@ -83,7 +97,6 @@ const Sidebar = ({ isOpen, onClose }) => {
             </NavLink>
           )}
         </div>
-
       </aside>
     </>
   )

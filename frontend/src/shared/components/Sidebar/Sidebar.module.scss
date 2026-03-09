@@ -106,6 +106,10 @@
   display: none;
 }
 
+.mobileOnly {
+  display: none;
+}
+
 @media (max-width: 940px) {
   .sidebar {
     transform: translateX(-108%);
@@ -133,5 +137,13 @@
 
   .overlayVisible {
     display: block;
+  }
+
+  .mobileOnly {
+    display: inline-flex;
+  }
+
+  .desktopOnly {
+    display: none;
   }
 }
