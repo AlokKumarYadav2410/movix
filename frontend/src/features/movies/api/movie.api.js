@@ -35,8 +35,9 @@ export const searchMoviesApi = async (query) => {
   return data;
 };
 
-export const getFullMovieApi = async (movieId) => {
-  const { data } = await apiClient.get(`/movies/${movieId}/full`);
+export const getFullMovieApi = async (movieId, mediaType = "movie") => {
+  const type = mediaType === "tv" ? "tv" : "movie";
+  const { data } = await apiClient.get(`/movies/${movieId}/full?type=${type}`);
   return data;
 };
 
