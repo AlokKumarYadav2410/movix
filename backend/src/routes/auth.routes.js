@@ -20,8 +20,8 @@ authRouter.post('/login', authController.loginUser);
 /**
  * @route POST /api/auth/logout
  * @desc Logout a user
- * @access Private
+ * @access Public
  */
-authRouter.post('/logout', authMiddleware, authController.logoutUser);
+authRouter.post('/logout', authController.logoutUser);
 
 module.exports = authRouter;
