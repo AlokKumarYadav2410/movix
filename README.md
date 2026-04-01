@@ -4,6 +4,10 @@ Full-stack movie discovery platform built with React + Redux Toolkit (frontend) 
 
 Movix lets users explore movies, search in real-time, watch trailers, and manage favourites/history with JWT auth and role-based admin controls.
 
+![Preview](./frontend/public/preview.png)
+
+🔗 Try it live: https://movix-wcf2.onrender.com/
+
 ## Tech Stack
 
 ### Frontend
